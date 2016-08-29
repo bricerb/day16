@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class SampleCanvas extends Application {
@@ -18,7 +19,8 @@ public class SampleCanvas extends Application {
     final double DEFAULT_SCENE_HEIGHT = 600;
     final double DEFAULT_SCENE_WIDTH = 800;
     int numCircles = 2;
-    double strokeSize = 2;
+    double strokeSize = 1;
+    double fillSize =2;
 
     @Override
     public void start(Stage primaryStage) {
@@ -51,7 +53,7 @@ public class SampleCanvas extends Application {
                 }
                 if (event.getCode() == KeyCode.RIGHT) {
                 numCircles += 2;
-                if (numCircles == 100) {
+                if (numCircles == 200) {
                     numCircles -= 2;
                 }
                 }
@@ -60,14 +62,18 @@ public class SampleCanvas extends Application {
                 }
                 if (event.getCode() == KeyCode.UP) {
                     strokeSize += 1;
-                    if (strokeSize == 20) {
+                    fillSize += 2;
+                    if (strokeSize == 20 || fillSize == 40) {
                         strokeSize -= 1;
+                        fillSize -= 2;
                     }
             }
                 if (event.getCode() == KeyCode.DOWN) {
                     strokeSize -= 1;
-                    if (strokeSize == 2) {
+                    fillSize -= 2;
+                    if (strokeSize == 2 || fillSize == 2) {
                         strokeSize +=1;
+                        fillSize +=2;
                             }
                 }
         }
@@ -83,17 +89,20 @@ public class SampleCanvas extends Application {
                          graphicsContext.setStroke(Color.color(Math.random(), Math.random(), Math.random()));
                          graphicsContext.strokeOval((Math.random() * e.getX()), (Math.random() * e.getY()), strokeSize, strokeSize);
                      }
-//                    graphicsContext.clearRect(0, 0, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
                  } else if (e.isControlDown() && e.isDragDetect()) {
-//                    graphicsContext.strokeOval(e.getX(), e.getY(), strokeSize, strokeSize);
                      graphicsContext.clearRect(0, 0, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
                      for (int counter = 0; counter < numCircles; counter++) {
-                         graphicsContext.setStroke(Color.color(Math.random(), Math.random(), Math.random()));
-                         graphicsContext.strokeOval(Math.random() * DEFAULT_SCENE_WIDTH, Math.random() * DEFAULT_SCENE_HEIGHT, strokeSize, strokeSize);
+                         graphicsContext.setFill(Color.color(Math.random(), Math.random(), Math.random()));
+                         graphicsContext.fillOval(Math.random() * DEFAULT_SCENE_WIDTH, Math.random() * DEFAULT_SCENE_HEIGHT, fillSize, fillSize);
                     }
+                 } else if (e.isShiftDown() && e.isDragDetect()) {
+                     graphicsContext.clearRect(0, 0, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
+                     graphicsContext.setFill(Color.color(Math.random(), Math.random(), Math.random()));
+                     graphicsContext.fillText("Hold Alt to let your cursor be an end point.\nHold Ctrl to let the entire screen go crazy.\nUse up and down to adjust the sizes.\nUse left and right to adjust the amount.", e.getX() + 20, e.getY() + 10);
                  } else if (e.isDragDetect()) {
-                     graphicsContext.strokeOval(e.getX(), e.getY(), strokeSize, strokeSize);
-                 }
+                     graphicsContext.setFill(Color.color(Math.random(), Math.random(), Math.random()));
+                     graphicsContext.fillOval(e.getX(), e.getY(), fillSize, fillSize);
+                     }
 
             }
         });

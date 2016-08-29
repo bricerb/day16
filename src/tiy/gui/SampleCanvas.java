@@ -91,7 +91,7 @@ public class SampleCanvas extends Application {
                      }
                  } else if (e.isControlDown() && e.isDragDetect()) {
                      graphicsContext.clearRect(0, 0, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
-                     for (int counter = 0; counter < numCircles; counter++) {
+                     for (int counter = 0; counter < (numCircles * 4); counter++) {
                          graphicsContext.setFill(Color.color(Math.random(), Math.random(), Math.random()));
                          graphicsContext.fillOval(Math.random() * DEFAULT_SCENE_WIDTH, Math.random() * DEFAULT_SCENE_HEIGHT, fillSize, fillSize);
                     }
@@ -108,7 +108,7 @@ public class SampleCanvas extends Application {
         });
 
         rootGroup.getChildren().add(canvas);
-        Scene scene = new Scene(rootGroup, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
+        Scene scene = new Scene(rootGroup, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT, Color.BLACK);
         primaryStage.setScene(scene);
 
         primaryStage.show();
